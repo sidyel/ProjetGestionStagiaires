@@ -1,0 +1,42 @@
+<!-- src/app/students‑projects/students‑projects.component.html -->
+<div class="container mt-4">
+  <h2 class="mb-4">Mes Étudiants & leurs Projets</h2>
+
+  <div *ngFor="let row of data" class="card mb-3 shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      Étudiant : {{ row.stagiaire.nom }} {{ row.stagiaire.prenom }}
+    </div>
+    <div class="card-body">
+      <ng-container *ngIf="row.projets.length > 0; else noProj">
+        <table class="table table-bordered table-striped align-middle m-0">
+          <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Titre</th>
+            <th>Début</th>
+            <th>Fin</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let p of row.projets; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ p.titre }}</td>
+            <td>{{ p.dateDebut }}</td>
+            <td>{{ p.dateFin }}</td>
+            <td>
+              <button class="btn btn-sm btn-danger"
+                      (click)="desaffecter(row, row.affectations[i])">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noProj>
+        <p class="text-muted">Aucun projet assigné.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

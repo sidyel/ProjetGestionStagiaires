@@ -1,0 +1,15 @@
+<div class="chat-container">
+  <div class="message-list">
+    <div *ngFor="let msg of messages"
+         [ngClass]="{ 'sent': msg.idStagiaire === idStagiaire, 'received': msg.idStagiaire !== idStagiaire }"
+         class="message-bubble">
+      <div class="content">{{ msg.contenu }}</div>
+      <div class="timestamp">{{ msg.dateEnvoi }}</div>
+    </div>
+  </div>
+
+  <div class="message-input">
+    <input [(ngModel)]="nouveauMessage" placeholder="Écrire un message..." />
+    <button (click)="envoyer()">Envoyer</button>
+  </div>
+</div>

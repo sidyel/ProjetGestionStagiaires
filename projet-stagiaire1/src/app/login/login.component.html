@@ -1,0 +1,22 @@
+<div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+  <div class="login-container shadow p-5 bg-white rounded" style="width: 100%; max-width: 450px;">
+    <h2 class="text-center text-primary mb-4">Connexion</h2>
+
+    <form [formGroup]="formLogin" (ngSubmit)="handlogin()">
+      <div class="mb-3">
+        <label for="username" class="form-label p-1">Nom d'utilisateur</label>
+        <input type="text" class="form-control p-1" id="username" formControlName="username" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label p-1">Mot de passe</label>
+        <input type="password" class="form-control p-1" id="password" formControlName="password" required />
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary p-2">Se connecter</button>
+      </div>
+    </form>
+
+    <p class="text-center mt-3 text-muted">Vous n'avez pas de compte ? <a href="#">Créer un compte</a></p>
+  </div>
+</div>

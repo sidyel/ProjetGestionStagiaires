@@ -1,0 +1,124 @@
+<!-- Menu horizontal -->
+<div class="bg-white shadow-sm p-3 mb-4 rounded d-flex gap-3">
+  <button class="btn btn-success"
+    data-bs-toggle="modal"
+    data-bs-target="#modalStagiaire">
+<i class="bi bi-plus-circle me-2"></i> Ajouter Stagiaire
+</button>
+  <div class="input-group mb-3 w-50">
+    <input type="text"
+           class="form-control"
+           placeholder="Rechercher par nom ou prénom"
+           [(ngModel)]="motCleRecherche"
+           (keyup.enter)="rechercherStagiaires()">
+
+    <button class="btn btn-outline-primary" (click)="rechercherStagiaires()">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+<button class="btn btn-info text-white">
+<i class="bi bi-info-circle me-2"></i> Détails RH
+</button>
+</div>
+<table class="table table-bordered table-striped align-middle m-0">
+<thead class="table-dark">
+<tr>
+<th>Nom</th>
+<th>Prénom</th>
+<th>Email</th>
+<th>Téléphone</th>
+<th>Encadrant</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let stagiaire of listeStagiaires">
+<td>{{ stagiaire.nom }}</td>
+<td>{{ stagiaire.prenom }}</td>
+<td>{{ stagiaire.email }}</td>
+<td>{{ stagiaire.telephonne }}</td>
+  <td>{{ stagiaire.encadrant?.nom }} {{ stagiaire.encadrant?.prenom }}</td>
+
+
+
+  <td class="d-flex gap-2">
+<button class="btn btn-warning btn-sm"
+        (click)="modifierStagiaire(stagiaire)">
+  Modifier
+</button>
+<button class="btn btn-danger btn-sm"
+        (click)="supprimerStagiaire(stagiaire)">
+  Supprimer
+</button>
+    <button class="btn btn-sm btn-secondary"
+            (click)="genererAttestation(stagiaire)">
+      <i class="bi bi-file-earmark-pdf"></i>
+      Attestation
+    </button>
+</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Modal du formulaire -->
+<div class="modal fade" id="modalStagiaire" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="formulaireStagiaire" (ngSubmit)="ajouterStagiaire()">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ enModeModification ? 'Modifier Stagiaire' : 'Ajouter Stagiaire' }}
+          </h5>
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nom</label>
+              <input formControlName="nom" type="text" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Prénom</label>
+              <input formControlName="prenom" type="text" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input formControlName="email" type="email" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Téléphone</label>
+              <input formControlName="telephonne" type="text" class="form-control" />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Encadrant</label>
+              <select formControlName="idencadrant" class="form-select">
+                <option [ngValue]="null">-- Sélectionner --</option>
+                <option *ngFor="let enc of listeEncadrants" [ngValue]="enc.idpersonne">
+                  {{ enc.nom }} {{ enc.prenom }}
+                </option>
+              </select>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal">
+            Annuler
+          </button>
+          <button type="submit"
+                  class="btn btn-primary"
+                  [disabled]="formulaireStagiaire.invalid">
+            {{ enModeModification ? 'Modifier' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

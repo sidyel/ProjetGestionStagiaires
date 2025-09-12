@@ -1,0 +1,83 @@
+<div class="bg-white shadow-sm p-3 mb-4 rounded d-flex justify-content-between">
+  <button class="btn btn-primary" (click)="ouvrirModalAjout()">
+    <i class="bi bi-send-plus me-2"></i>Envoyer un Message
+  </button>
+</div>
+
+<!-- Tableau des messages -->
+<div class="card">
+  <table class="table table-bordered table-striped align-middle m-0">
+    <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <!-- <th>Stagiaire</th>
+      <th>Encadrant</th>-->
+      <th>Contenu</th>
+      <th>Date</th>
+      <th width="100">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let msg of messages">
+      <td>{{ msg.id }}</td>
+      <!--  <td>{{ getNomPrenomStagiaire(msg.idStagiaire) }}</td>
+       <td>{{ getNomPrenomEncadrant(msg.idEncadrant) }}</td>-->
+       <td>{{ msg.contenu }}</td>
+       <td>{{ msg.dateEnvoi | date: 'yyyy-MM-dd' }}</td>
+       <td>
+         <button class="btn btn-sm btn-danger" (click)="supprimerMessage(msg.id!)">
+           <i class="bi bi-trash"></i>
+         </button>
+       </td>
+     </tr>
+     </tbody>
+   </table>
+ </div>
+
+ <!-- Modal d’envoi de message -->
+<div class="modal fade" id="modalMessage" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="messageForm" (ngSubmit)="envoyerMessage()">
+        <div class="modal-header">
+          <h5 class="modal-title">Envoyer un message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label>Stagiaire</label>
+            <select formControlName="idStagiaire" class="form-select">
+              <option [value]="null">-- Sélectionner --</option>
+              <option *ngFor="let s of listeStagiaires" [value]="s.idpersonne">
+                {{ s.nom }} {{ s.prenom }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Encadrant</label>
+            <select formControlName="idEncadrant" class="form-select">
+              <option [value]="null">-- Sélectionner --</option>
+              <option *ngFor="let e of listeEncadrants" [value]="e.idpersonne">
+                {{ e.nom }} {{ e.prenom }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Contenu</label>
+            <textarea class="form-control" rows="3" formControlName="contenu"></textarea>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="messageForm.invalid">
+            Envoyer
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

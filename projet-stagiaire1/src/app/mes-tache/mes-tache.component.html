@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <h3>Mes Tâches</h3>
+
+  <button class="btn btn-primary mb-3" (click)="ouvrirModal('modalTache')">
+    <i class="bi bi-plus-circle"></i> Nouvelle Tâche
+  </button>
+
+  <table class="table table-bordered table-striped align-middle m-0">
+    <thead class="table-dark">
+    <tr>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Date début</th>
+      <th>Date fin</th>
+      <th>Statut</th>
+      <th>Stagiaire</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let t of mesTaches">
+      <td>{{ t.titre }}</td>
+      <td>{{ t.description }}</td>
+      <td>{{ t.dateDebut }}</td>
+      <td>{{ t.dateFin }}</td>
+      <td>{{ t.statut }}</td>
+      <td>{{ getNomStagiaire(t.idstagiaire) }}</td>
+      <td>
+        <button class="btn btn-warning btn-sm me-1" (click)="modifier(t)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="supprimer(t.idtache!)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ✅ Modal -->
+<div class="modal fade" id="modalTache" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form [formGroup]="formulaire" (ngSubmit)="ajouterOuModifier()" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ enModification ? 'Modifier' : 'Nouvelle' }} Tâche</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Titre</label>
+          <input type="text" class="form-control" formControlName="titre">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Statut</label>
+          <select class="form-select" formControlName="statut">
+            <option value="EN_ATTENTE">En attente</option>
+            <option value="EN_COURS">En cours</option>
+            <option value="TERMINEE">Terminée</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Description</label>
+          <textarea rows="3" class="form-control" formControlName="description"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Date début</label>
+          <input type="date" class="form-control" formControlName="dateDebut">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Date fin</label>
+          <input type="date" class="form-control" formControlName="dateFin">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Stagiaire</label>
+          <select class="form-select" formControlName="idstagiaire">
+            <option *ngFor="let s of mesStagiaires" [value]="s.idpersonne">
+              {{ s.nom }} {{ s.prenom }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" [disabled]="formulaire.invalid">
+          {{ enModification ? 'Modifier' : 'Ajouter' }}
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

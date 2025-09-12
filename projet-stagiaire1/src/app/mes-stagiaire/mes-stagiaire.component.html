@@ -1,0 +1,106 @@
+<!-- Menu horizontal -->
+<div class="bg-white shadow-sm p-3 mb-4 rounded d-flex gap-3">
+  <button class="btn btn-info text-white">
+    <i class="bi bi-info-circle me-2"></i> Liste de mes stagiaires
+  </button>
+</div>
+
+<!-- Tableau des stagiaires -->
+<div class="card">
+  <table class="table table-bordered table-hover">
+    <thead class="table-light">
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Spécialité</th>
+      <th>Niveau</th>
+      <th>action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let stagiaire of stagiaires">
+      <td>{{ stagiaire.idpersonne }}</td>
+      <td>{{ stagiaire.nom }}</td>
+      <td>{{ stagiaire.prenom }}</td>
+      <td>{{ stagiaire.email }}</td>
+      <td>{{ stagiaire.telephonne }}</td>
+      <td>{{ stagiaire.specialite }}</td>
+      <td>{{ stagiaire.niveauEtude }}</td>
+
+      <td class="d-flex gap-2">
+        <button class="btn btn-warning btn-sm"
+                (click)="modifierStagiaire(stagiaire)">
+          Modifier
+        </button>
+        <button class="btn btn-info btn-sm text-white" (click)="afficherDetails(stagiaire)">
+          <i class="bi bi-info-circle"></i> Détails
+        </button>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!-- Modal modification stagiaire -->
+<div class="modal fade" id="modalStagiaire" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formulaireStagiaire" (ngSubmit)="soumettreModification()">
+        <div class="modal-header">
+          <h5 class="modal-title">Modifier Stagiaire</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" formControlName="nom" placeholder="Nom" class="form-control mb-2" />
+          <input type="text" formControlName="prenom" placeholder="Prénom" class="form-control mb-2" />
+          <input type="email" formControlName="email" placeholder="Email" class="form-control mb-2" />
+          <input type="text" formControlName="telephonne" placeholder="Téléphone" class="form-control mb-2" />
+          <input type="text" formControlName="specialite" placeholder="Spécialité" class="form-control mb-2" />
+          <input type="text" formControlName="niveauEtude" placeholder="Niveau" class="form-control mb-2" />
+          <select class="form-select" formControlName="statut">
+            <option value="ACTIF">Actif</option>
+            <option value="INACTIF">Inactif</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="formulaireStagiaire.invalid">Modifier</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal détails stagiaire -->
+<div class="modal fade" id="modalDetailsStagiaire" tabindex="-1" aria-labelledby="detailsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title" id="detailsLabel">Fiche du stagiaire</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" *ngIf="stagiaireDetails">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Nom :</strong> {{ stagiaireDetails.nom }}</li>
+          <li class="list-group-item"><strong>Prénom :</strong> {{ stagiaireDetails.prenom }}</li>
+          <li class="list-group-item"><strong>Email :</strong> {{ stagiaireDetails.email }}</li>
+          <li class="list-group-item"><strong>Téléphone :</strong> {{ stagiaireDetails.telephonne }}</li>
+          <li class="list-group-item"><strong>Spécialité :</strong> {{ stagiaireDetails.specialite }}</li>
+          <li class="list-group-item"><strong>Niveau d’étude :</strong> {{ stagiaireDetails.niveauEtude }}</li>
+          <li class="list-group-item"><strong>Statut :</strong> {{ stagiaireDetails.statut }}</li>
+          <li class="list-group-item"><strong>Date début :</strong> {{ stagiaireDetails.dateDebut }}</li>
+          <li class="list-group-item"><strong>Date fin :</strong> {{ stagiaireDetails.dateFin }}</li>
+          <li class="list-group-item"><strong>Domaine :</strong> {{ stagiaireDetails.domaineStage }}</li>
+          <li class="list-group-item"><strong>Établissement d'origine :</strong> {{ stagiaireDetails.etablissementOrigine }}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+

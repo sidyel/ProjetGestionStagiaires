@@ -1,0 +1,40 @@
+/* profil.css - styles communs pour les pages profil */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+.profil-header h2 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+img {
+  border-radius: 10px;
+  max-height: 350px;
+  object-fit: cover;
+}
+
+h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.1rem;
+}
+
+main .row {
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  img {
+    margin-top: 20px;
+    max-height: none;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+}

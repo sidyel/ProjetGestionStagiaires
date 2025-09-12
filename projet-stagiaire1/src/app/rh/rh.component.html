@@ -1,0 +1,122 @@
+<!-- Menu horizontal -->
+<div class="bg-white shadow-sm p-3 mb-4 rounded d-flex gap-3">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ajouterRhModal">
+    <i class="bi bi-plus-circle me-2"></i> Ajouter RH
+  </button>
+
+</div>
+<div class="card">
+<table class="table table-bordered table-striped align-middle m-0">
+  <thead class="table-dark">
+  <tr>
+    <th>#</th>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Email</th>
+    <th>Téléphone</th>
+    <th>Statut</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let rh of listeRh">
+    <td>{{ rh.idpersonne }}</td>
+    <td>{{ rh.nom }}</td>
+    <td>{{ rh.prenom }}</td>
+    <td>{{ rh.email }}</td>
+    <td>{{ rh.telephonne }}</td>
+    <td>
+        <span class="badge" [ngClass]="{
+          'bg-success': rh.etats === 'ACTIF',
+          'bg-primary': rh.etats === 'INACTIF'
+        }">
+          {{ rh.etats }}
+        </span>
+    </td>
+    <td>
+      <button class="btn btn-sm btn-warning me-1" (click)="modifierRh(rh)" data-bs-toggle="modal" data-bs-target="#ajouterRhModal">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+      <button class="btn btn-sm btn-danger" (click)="supprimerRh(rh)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<!-- Modal d'ajout RH -->
+
+<!-- Modal d'ajout RH -->
+<div class="modal fade" id="ajouterRhModal" tabindex="-1" aria-labelledby="ajouterRhModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Le formulaire est lié à ton FormGroup -->
+      <form [formGroup]="formulaireRh" (ngSubmit)="ajouterRh()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ajouterRhModalLabel">Ajouter un RH</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Formulaire avec formControlName -->
+          <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" id="nom" formControlName="nom" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="prenom" class="form-label">Prénom</label>
+            <input type="text" id="prenom" formControlName="prenom" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="telephonne" class="form-label">Téléphone</label>
+            <input type="text" id="telephonne" formControlName="telephonne" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="datenaiss" class="form-label">Date de naissance</label>
+            <input type="date" id="datenaiss" formControlName="datenaiss" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="lieunaiss" class="form-label">Lieu de naissance</label>
+            <input type="text" id="lieunaiss" formControlName="lieunaiss" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="login" class="form-label">Login</label>
+            <input type="text" id="login" formControlName="login" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="motpasse" class="form-label">Mot de passe</label>
+            <input type="password" id="motpasse" formControlName="motpasse" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="matricule" class="form-label">Matricule</label>
+            <input type="text" id="matricule" formControlName="matricule" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="cin" class="form-label">CIN</label>
+            <input type="text" id="cin" formControlName="cin" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="etats" class="form-label">Statut</label>
+            <select id="etats" formControlName="etats" class="form-select">
+              <option value="ACTIF">Actif</option>
+              <option value="INACTIF">Inactif</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="formulaireRh.invalid">
+            {{ enModeModification ? 'Modifier' : 'Ajouter' }}
+          </button>        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

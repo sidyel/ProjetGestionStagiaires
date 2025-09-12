@@ -1,0 +1,37 @@
+<!-- src/app/mes-projets-stagiaire/mes-projets-stagiaire.component.html -->
+<div class="container mt-4">
+  <h2 class="mb-3">Projets dont je suis partie prenante</h2>
+
+  <div *ngIf="projets.length === 0" class="alert alert-info">
+    Vous n'êtes affecté à aucun projet pour le moment.
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6" *ngFor="let projet of projets">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ projet.titre }}</h5>
+          <p class="card-text mb-1">{{ projet.description }}</p>
+          <p class="mb-1">
+            <strong>Planning :</strong>
+            {{ projet.dateDebut }} → {{ projet.dateFin }}
+          </p>
+          <p class="mb-2">
+            <strong>Référent :</strong>
+            {{ projet.encadrant?.nom }} {{ projet.encadrant?.prenom }}
+          </p>
+          <div class="mt-auto">
+            <span class="badge"
+                  [ngClass]="getBadgeClass(projet)">
+              Avancement : {{ projet.avancement ?? 0 }} %
+            </span>
+            <a [routerLink]="['/projet', projet.idprojet]"
+               class="btn btn-sm btn-outline-primary float-end">
+              Détails
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="container mt-4">
+
+  <h2 class="mb-3">Mes absences</h2>
+
+  <!-- Bouton Ajouter -->
+  <button class="btn btn-primary mb-3" (click)="ouvrirModal('modalAbsence')">
+    <i class="bi bi-calendar-plus me-2"></i> Déclarer une absence
+  </button>
+
+  <!-- Tableau historique -->
+  <table class="table table-bordered table-striped align-middle m-0">
+    <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Début</th>
+      <th>Fin</th>
+      <th>Motif</th>
+      <th>Justification</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let abs of listeAbsences">
+      <td>{{ abs.idabsence }}</td>
+      <td>{{ abs.dateDebut }}</td>
+      <td>{{ abs.dateFin }}</td>
+      <td>{{ abs.motif }}</td>
+      <td>{{ abs.justification }}</td>
+
+      <td>
+        <button class="btn btn-sm btn-warning"
+                (click)="ouvrirModal('modalAbsence', abs)">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal Déclaration / Édition -->
+<div class="modal fade" id="modalAbsence" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formulaire" (ngSubmit)="soumettre()">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ enEdition ? 'Modifier la justification' : 'Déclarer une absence' }}
+          </h5>
+          <button type="button" class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Fermer"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Date début</label>
+            <input formControlName="dateDebut" type="date" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date fin</label>
+            <input formControlName="dateFin" type="date" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Motif</label>
+            <input formControlName="motif" type="text" class="form-control" [readonly]="enEdition">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Justification</label>
+            <textarea formControlName="justification"
+                      rows="3"
+                      class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal">Annuler</button>
+          <button type="submit"
+                  class="btn btn-primary"
+                  [disabled]="formulaire.invalid">
+            {{ enEdition ? 'Enregistrer' : 'Déclarer' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<!-- Bouton d’ajout -->
+<div class="bg-white shadow-sm p-3 mb-4 rounded d-flex gap-3">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProjet">
+    <i class="bi bi-plus-circle me-2"></i> Ajouter Projet
+  </button>
+</div>
+
+<!-- Tableau des projets -->
+<div class="card">
+  <table class="table table-bordered table-striped align-middle m-0">
+    <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Début</th>
+      <th>Fin</th>
+      <th width="120">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of listeProjets">
+      <td>{{ p.idprojet }}</td>
+      <td>{{ p.titre }}</td>
+      <td>{{ p.description }}</td>
+      <td>{{ p.dateDebut }}</td>
+      <td>{{ p.dateFin }}</td>
+      <td class="d-flex gap-2">
+        <button class="btn btn-sm btn-warning" (click)="modifierProjet(p)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="supprimerProjet(p.idprojet!)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal d’ajout/modification -->
+<div class="modal fade" id="modalProjet" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formulaireProjet" (ngSubmit)="ajouterOuModifierProjet()">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ enModification ? 'Modifier un projet' : 'Ajouter un projet' }}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Titre</label>
+            <input formControlName="titre" type="text" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea formControlName="description" rows="3" class="form-control"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date début</label>
+            <input formControlName="dateDebut" type="date" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date fin</label>
+            <input formControlName="dateFin" type="date" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Encadrant</label>
+            <select formControlName="idencadrant" class="form-select">
+              <option [value]="null">-- Sélectionner --</option>
+              <option *ngFor="let e of listeEncadrants" [value]="e.idpersonne">
+                {{ e.nom }} {{ e.prenom }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="formulaireProjet.invalid">
+            {{ enModification ? 'Modifier' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Liste des Tâches</h2>
+
+  <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTache">
+    <i class="bi bi-plus-circle me-2"></i> Nouvelle Tâche
+  </button>
+
+  <table class="table table-bordered table-striped align-middle m-0">
+    <thead class="table-dark">
+    <tr>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Début</th>
+      <th>Fin</th>
+      <th>Statut</th>
+      <th>Stagiaire</th>
+      <th>Encadrant</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tache of listeTaches">
+      <td>{{ tache.titre }}</td>
+      <td>{{ tache.description }}</td>
+      <td>{{ tache.dateDebut }}</td>
+      <td>{{ tache.dateFin }}</td>
+      <td>{{ tache.statut }}</td>
+      <td>{{ getNomStagiaire(tache.idstagiaire!) }}</td>
+      <td>{{ getNomEncadrant(tache.idencadrant!) }}</td>
+      <td>
+        <button class="btn btn-sm btn-warning me-1" (click)="modifierTache(tache)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="supprimerTache(tache.idtache!)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ✅ Modal Tâche -->
+<div class="modal fade" id="modalTache" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="formulaireTache" (ngSubmit)="ajouterOuModifierTache()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ enModification ? 'Modifier' : 'Ajouter' }} une Tâche</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Titre</label>
+              <input formControlName="titre" type="text" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Statut</label>
+              <select formControlName="statut" class="form-select">
+                <option value="EN_ATTENTE">En attente</option>
+                <option value="EN_COURS">En cours</option>
+                <option value="TERMINEE">Terminée</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Description</label>
+              <textarea formControlName="description" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date début</label>
+              <input formControlName="dateDebut" type="date" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date fin</label>
+              <input formControlName="dateFin" type="date" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">ID Stagiaire</label>
+              <input formControlName="idstagiaire" type="number" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">ID Encadrant</label>
+              <input formControlName="idencadrant" type="number" class="form-control">
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="formulaireTache.invalid">
+            {{ enModification ? 'Modifier' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

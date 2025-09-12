@@ -1,0 +1,114 @@
+<div class="container mt-4">
+  <h2>Mes Projets</h2>
+
+  <button class="btn btn-primary mb-3" (click)="ouvrirAjout()">
+    <i class="bi bi-plus-circle me-2"></i> Nouveau Projet
+  </button>
+
+  <table class="table table-bordered table-striped align-middle m-0">
+    <thead class="table-dark">
+    <tr>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Début</th>
+      <th>Fin</th>
+      <th>Actions</th>
+      <th>Assigner</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let projet of projets">
+      <td>{{ projet.titre }}</td>
+      <td>{{ projet.description }}</td>
+      <td>{{ projet.dateDebut }}</td>
+      <td>{{ projet.dateFin }}</td>
+      <td>
+        <button class="btn btn-sm btn-warning me-2" (click)="modifierProjet(projet)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="supprimerProjet(projet.idprojet!)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-success"
+                (click)="ouvrirAssignModal(projet)">
+          <i class="bi bi-person-plus"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ✅ Modal -->
+<div class="modal fade" id="modalProjet" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="projetForm" (ngSubmit)="soumettreProjet()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ enModification ? 'Modifier' : 'Ajouter' }} un Projet</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Titre</label>
+              <input formControlName="titre" type="text" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date Début</label>
+              <input formControlName="dateDebut" type="date" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Description</label>
+              <textarea formControlName="description" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date Fin</label>
+              <input formControlName="dateFin" type="date" class="form-control" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="projetForm.invalid">
+            {{ enModification ? 'Modifier' : 'Ajouter' }}
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAssign" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="assignForm" (ngSubmit)="assigner()">
+        <div class="modal-header">
+          <h5 class="modal-title">Affecter un stagiaire</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Stagiaire</label>
+            <select formControlName="idstagiaire" class="form-select">
+              <option [value]="null">-- Choisir --</option>
+              <option *ngFor="let s of stagiaires" [value]="s.idpersonne">
+                {{ s.nom }} {{ s.prenom }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="assignForm.invalid">
+            Affecter
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

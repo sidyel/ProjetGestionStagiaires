@@ -1,0 +1,40 @@
+/* Réinitialisation basique */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.logo img {
+  border-radius: 5px;
+}
+
+/* Header bouton */
+header a.btn, header button.btn {
+  font-size: 1.2rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+}
+
+/* Images des sections */
+img.img-fluid {
+  border-radius: 15px;
+}
+
+/* Section inversée fond bleu */
+.bg-primary .text-white p,
+.bg-primary .text-white h2 {
+  color: white;
+}
+
+/* Pour faire descendre le footer si peu de contenu */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}

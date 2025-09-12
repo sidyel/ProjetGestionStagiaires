@@ -1,0 +1,107 @@
+<!-- Menu horizontal -->
+<div class="bg-white shadow-sm p-3 mb-4 rounded d-flex gap-3">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ajouterEncadrantModal">
+    <i class="bi bi-plus-circle me-2"></i> Ajouter Encadrant
+  </button>
+  <button class="btn btn-warning">
+    <i class="bi bi-pencil-square me-2"></i> Modifier Encadrant
+  </button>
+  <div class="input-group mb-3 w-50">
+    <input type="text"
+           class="form-control"
+           placeholder="Rechercher par nom ou prénom"
+           [(ngModel)]="motCleRecherche"
+           (keyup.enter)="rechercherEncadrant()">
+
+    <button class="btn btn-outline-primary" (click)="rechercherEncadrant()">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+</div>
+<!-- Tableau -->
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+  <tr>
+    <th>#</th>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Email</th>
+    <th>Téléphone</th>
+    <th>Spécialité</th>
+    <th>Statut</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let enc of listeEncadrants">
+    <td>{{ enc.idpersonne }}</td>
+    <td>{{ enc.nom }}</td>
+    <td>{{ enc.prenom }}</td>
+    <td>{{ enc.email }}</td>
+    <td>{{ enc.telephonne }}</td>
+    <td>{{ enc.specialite }}</td>
+    <td>
+        <span class="badge" [ngClass]="{
+          'bg-success': enc.etats === 'ACTIF',
+          'bg-secondary': enc.etats === 'INACTIF'
+        }">{{ enc.etats }}</span>
+    </td>
+    <td>
+      <button class="btn btn-sm btn-warning me-1" (click)="modifierEncadrant(enc)" data-bs-toggle="modal" data-bs-target="#ajouterEncadrantModal">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+      <button class="btn btn-sm btn-danger" (click)="supprimerEncadrant(enc)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="ajouterEncadrantModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formulaireEncadrant" (ngSubmit)="ajouterEncadrant()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">{{ enModeModification ? 'Modifier' : 'Ajouter' }} Encadrant</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Champs du formulaire -->
+          <div class="mb-2" *ngFor="let champ of [
+            {id: 'nom', label: 'Nom'},
+            {id: 'prenom', label: 'Prénom'},
+            {id: 'email', label: 'Email', type: 'email'},
+            {id: 'telephonne', label: 'Téléphone'},
+            {id: 'datenaiss', label: 'Date de naissance', type: 'date'},
+            {id: 'lieunaiss', label: 'Lieu de naissance'},
+            {id: 'login', label: 'Login'},
+            {id: 'motpasse', label: 'Mot de passe', type: 'password'},
+            {id: 'matricule', label: 'Matricule'},
+            {id: 'cin', label: 'CIN'},
+            {id: 'specialite', label: 'Spécialité'}
+          ]">
+            <label [for]="champ.id" class="form-label">{{ champ.label }}</label>
+            <input [type]="champ.type || 'text'" [id]="champ.id" [formControlName]="champ.id" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="etats" class="form-label">Statut</label>
+            <select id="etats" formControlName="etats" class="form-select">
+              <option value="ACTIF">Actif</option>
+              <option value="INACTIF">Inactif</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button class="btn btn-primary" [disabled]="formulaireEncadrant.invalid">
+            {{ enModeModification ? 'Modifier' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <h3>Détails</h3>
+  <button class="btn btn-info me-2" (click)="ouvrirModal('modalStag')" [disabled]="!stagiaire">
+    <i class="bi bi-person"></i> Infos Stagiaire
+  </button>
+  <button class="btn btn-secondary" (click)="ouvrirModal('modalEnc')" [disabled]="!encadrant">
+    <i class="bi bi-person-badge"></i> Infos Encadrant
+  </button>
+
+  <!-- Modal Stagiaire -->
+  <div class="modal fade" id="modalStag" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Informations Stagiaire</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" *ngIf="stagiaire">
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Nom / Prénom:</strong> {{ stagiaire.nom }} {{ stagiaire.prenom }}</li>
+            <li class="list-group-item"><strong>Date naissance:</strong> {{ stagiaire.datenaiss }}</li>
+            <li class="list-group-item"><strong>Lieu naissance:</strong> {{ stagiaire.lieunaiss }}</li>
+            <li class="list-group-item"><strong>Email:</strong> {{ stagiaire.email }}</li>
+            <li class="list-group-item"><strong>Téléphone:</strong> {{ stagiaire.telephonne }}</li>
+            <li class="list-group-item"><strong>Matricule:</strong> {{ stagiaire.matricule }}</li>
+            <li class="list-group-item"><strong>CIN:</strong> {{ stagiaire.cin }}</li>
+            <li class="list-group-item"><strong>Statut:</strong> {{ stagiaire.statut }}</li>
+            <li class="list-group-item"><strong>Niveau Étude:</strong> {{ stagiaire.niveauEtude }}</li>
+            <li class="list-group-item"><strong>Spécialité:</strong> {{ stagiaire.specialite }}</li>
+            <li class="list-group-item"><strong>Domaine Stage:</strong> {{ stagiaire.domaineStage }}</li>
+            <li class="list-group-item"><strong>Établissement Origine:</strong> {{ stagiaire.etablissementOrigine }}</li>
+            <li class="list-group-item"><strong>Dates Stage:</strong> {{ stagiaire.dateDebut }} à {{ stagiaire.dateFin }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Encadrant -->
+  <div class="modal fade" id="modalEnc" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Informations Encadrant</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" *ngIf="encadrant">
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Nom / Prénom:</strong> {{ encadrant.nom }} {{ encadrant.prenom }}</li>
+            <li class="list-group-item"><strong>Date naissance:</strong> {{ encadrant.datenaiss }}</li>
+            <li class="list-group-item"><strong>Lieu naissance:</strong> {{ encadrant.lieunaiss }}</li>
+            <li class="list-group-item"><strong>Email:</strong> {{ encadrant.email }}</li>
+            <li class="list-group-item"><strong>Téléphone:</strong> {{ encadrant.telephonne }}</li>
+            <li class="list-group-item"><strong>Matricule:</strong> {{ encadrant.matricule }}</li>
+            <li class="list-group-item"><strong>CIN:</strong> {{ encadrant.cin }}</li>
+            <li class="list-group-item"><strong>Spécialité:</strong> {{ encadrant.specialite }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
