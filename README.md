@@ -1,7 +1,7 @@
 # projet de gestion des stagiaire
 La plateforme est une solution centralisée pour le suivi et l'encadrement des stagiaires en entreprise. Elle permet de suivre les tâches et projets, gérer les utilisateurs et les rôles, faciliter la communication interne et assurer le suivi des absences, le tout via une architecture microservices et une interface Angular.
 
-Objectifs:
+Objectifs: 
 Rationaliser le suivi des stagiaires, faciliter un mentorat efficace, améliorer la gestion des tâches et générer des attestation de fin de stage.
 Solution proposée:
 Une application centralisée composée de microservices pour assurer modularité, indépendance, scalabilité et maintenabilité, avec un frontend Angular responsive pour l'expérience utilisateur.
